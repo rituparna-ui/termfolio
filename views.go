@@ -15,18 +15,28 @@ func GenerateInitView(m Model) string {
 		Padding(1, 4).
 		Render("Hello, World!\nWelcome to Ritu's Termfolio.\nA Terminal Based Portfolio")
 
-	continueStr := lipgloss.NewStyle().
+	loader := lipgloss.NewStyle().
 		Foreground(lipgloss.Color("#008080")).
 		Faint(true).
 		Blink(true).
 		AlignHorizontal(lipgloss.Center).
 		Render("Press Enter to continue...")
 
+	if m.InitView.showLoader {
+		// loader = lipgloss.NewStyle().
+		// 	Foreground(lipgloss.Color("#FF00FF")).
+		// 	Bold(true).
+		// 	AlignHorizontal(lipgloss.Center).
+		// 	Padding(1, 4).
+		// 	Render(fmt.Sprintf("Loading... %0.1f", m.InitView.progress.Percent()))
+		loader = m.InitView.progress.View()
+	}
+
 	outputString := lipgloss.NewStyle().
 		Width(m.Window.Width).
 		Height(m.Window.Height).
 		Align(lipgloss.Center, lipgloss.Center).
-		Render(fmt.Sprintf("%s\n\n%s", str, continueStr))
+		Render(fmt.Sprintf("%s\n\n%s", str, loader))
 
 	return outputString
 }
