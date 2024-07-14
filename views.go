@@ -41,6 +41,44 @@ func GenerateInitView(m Model) string {
 	return outputString
 }
 
+func tabBorderWithBottom(left, middle, right string) lipgloss.Border {
+	border := lipgloss.RoundedBorder()
+	border.BottomLeft = left
+	border.Bottom = middle
+	border.BottomRight = right
+	return border
+}
+
 func GenerateHomeView(m Model) string {
-	return "Home"
+	renderedTabs := []string{}
+	inactiveTabBorder := tabBorderWithBottom("┴", "─", "┴")
+	activeTabBorder := tabBorderWithBottom("┘", " ", "└")
+
+	for i, tab := range m.HomeView.Tabs {
+		isActive := i == m.HomeView.ActiveTab
+
+		var tabStyle lipgloss.Style
+
+		if isActive {
+			tabStyle = lipgloss.NewStyle().
+				Border(activeTabBorder).
+				Bold(true).
+				Underline(true).
+				Foreground(lipgloss.Color("#FF00FF"))
+		} else {
+			tabStyle = lipgloss.NewStyle().
+				Border(inactiveTabBorder)
+		}
+		paddedText := lipgloss.NewStyle().
+			Width(15).
+			AlignHorizontal(lipgloss.Center).
+			Render(tab)
+		renderedTabs = append(renderedTabs, tabStyle.Padding(1, 2, 0, 2).Render(paddedText))
+	}
+	joined := lipgloss.JoinHorizontal(lipgloss.Top, renderedTabs...)
+
+	return lipgloss.NewStyle().
+		Width(m.Window.Width).
+		AlignHorizontal(lipgloss.Center).
+		Render(joined)
 }

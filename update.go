@@ -20,6 +20,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.Screen = "HOME_VIEW"
 		}
 		cmd := m.InitView.progress.IncrPercent(rand.Float64() * 0.25)
+		// cmd := m.InitView.progress.IncrPercent(0.5)
 		return m, tea.Batch(cmd, InitViewLoaderTick())
 
 	case progress.FrameMsg:
@@ -32,10 +33,20 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		if msgStr == "ctrl+c" {
 			return m, tea.Quit
 		}
-		if msgStr == "enter" && m.Screen == "INIT_VIEW" {
+
+		if m.Screen == "INIT_VIEW" && msgStr == "enter" {
 			m.InitView.showLoader = true
 			m.InitView.progress = progress.New(progress.WithDefaultGradient(), progress.WithWidth(m.Window.Width/2))
 			return m, InitViewLoaderTick()
+		}
+
+		if m.Screen == "HOME_VIEW" {
+			if msgStr == "right" || msgStr == "tab" {
+				m.HomeView.ActiveTab = (m.HomeView.ActiveTab + 1) % len(m.HomeView.Tabs)
+			}
+			if msgStr == "left" || msgStr == "shift+tab" {
+				m.HomeView.ActiveTab = (m.HomeView.ActiveTab - 1 + len(m.HomeView.Tabs)) % len(m.HomeView.Tabs)
+			}
 		}
 	}
 	return m, nil
