@@ -34,7 +34,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 		if msgStr == "enter" && m.Screen == "INIT_VIEW" {
 			m.InitView.showLoader = true
-			m.InitView.progress = progress.New(progress.WithDefaultGradient())
+			m.InitView.progress = progress.New(progress.WithDefaultGradient(), progress.WithWidth(m.Window.Width/2))
 			return m, InitViewLoaderTick()
 		}
 	}
