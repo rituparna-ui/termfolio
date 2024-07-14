@@ -7,8 +7,9 @@ import (
 )
 
 type Window struct {
-	Width  int
-	Height int
+	Width    int
+	Height   int
+	TooSmall bool
 }
 
 type InitViewLoaderTickMsg time.Time

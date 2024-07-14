@@ -14,6 +14,12 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case tea.WindowSizeMsg:
 		m.Window.Width = msg.Width
 		m.Window.Height = msg.Height
+		tooSmall := m.Window.Height < 30 || m.Window.Width < 90
+		if tooSmall {
+			m.Window.TooSmall = true
+		} else {
+			m.Window.TooSmall = false
+		}
 
 	case InitViewLoaderTickMsg:
 		if m.InitView.progress.Percent() >= 1.0 {

@@ -6,6 +6,26 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
+func GenerateTooSmallView(m Model) string {
+	message := fmt.Sprintf("Your %s is too small!",
+		lipgloss.
+			NewStyle().
+			Bold(true).
+			Foreground(lipgloss.Color("#FF00FF")).
+			Render("terminal"))
+
+	borderedMessage := lipgloss.NewStyle().
+		Border(lipgloss.RoundedBorder()).
+		Padding(1, 2).
+		Render(message)
+
+	return lipgloss.NewStyle().
+		Width(m.Window.Width).
+		Height(m.Window.Height).
+		Align(lipgloss.Center, lipgloss.Center).
+		Render(borderedMessage)
+}
+
 func GenerateInitView(m Model) string {
 	str := lipgloss.NewStyle().
 		Foreground(lipgloss.Color("#FF00FF")).
