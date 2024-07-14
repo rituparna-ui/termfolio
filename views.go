@@ -63,11 +63,11 @@ func GenerateHomeView(m Model) string {
 			tabStyle = lipgloss.NewStyle().
 				Border(activeTabBorder).
 				Bold(true).
-				Underline(true).
 				Foreground(lipgloss.Color("#FF00FF"))
 		} else {
 			tabStyle = lipgloss.NewStyle().
-				Border(inactiveTabBorder)
+				Border(inactiveTabBorder).
+				Faint(true)
 		}
 		paddedText := lipgloss.NewStyle().
 			Width(15).
