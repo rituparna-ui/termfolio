@@ -95,10 +95,22 @@ func GenerateHomeView(m Model) string {
 			Render(tab)
 		renderedTabs = append(renderedTabs, tabStyle.Padding(1, 2, 0, 2).Render(paddedText))
 	}
-	joined := lipgloss.JoinHorizontal(lipgloss.Top, renderedTabs...)
 
-	return lipgloss.NewStyle().
+	tabs := lipgloss.JoinHorizontal(lipgloss.Top, renderedTabs...)
+	tabContent := lipgloss.NewStyle().
+		Width(82).
+		Height(24).
+		Border(lipgloss.RoundedBorder()).
+		UnsetBorderTop().
+		Render(m.HomeView.TabContent[m.HomeView.ActiveTab])
+
+	render := lipgloss.JoinVertical(lipgloss.Center, tabs, tabContent)
+
+	viewport := lipgloss.NewStyle().
 		Width(m.Window.Width).
-		AlignHorizontal(lipgloss.Center).
-		Render(joined)
+		Height(m.Window.Height).
+		Align(lipgloss.Center, lipgloss.Center).
+		Render(render)
+
+	return viewport
 }

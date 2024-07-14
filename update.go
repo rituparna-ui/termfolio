@@ -25,7 +25,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		if m.InitView.progress.Percent() >= 1.0 {
 			m.Screen = "HOME_VIEW"
 		}
-		cmd := m.InitView.progress.IncrPercent(rand.Float64() * 0.25)
+		cmd := m.InitView.progress.IncrPercent(rand.Float64() * 1)
 		// cmd := m.InitView.progress.IncrPercent(0.5)
 		return m, tea.Batch(cmd, InitViewLoaderTick())
 
