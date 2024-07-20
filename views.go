@@ -49,8 +49,7 @@ func GenerateHomeView(m *Model) string {
 	leftContainerContents := ""
 	for i, item := range m.HomeView.LeftPane.items {
 		menuStyle := lipgloss.
-			NewStyle().
-			Padding(1)
+			NewStyle()
 
 		cursor := " "
 		if i == m.HomeView.LeftPane.cursor {
@@ -61,7 +60,7 @@ func GenerateHomeView(m *Model) string {
 				Background(lipgloss.Color("#060606")).
 				Width(m.Window.Width/4 - 2)
 		}
-		leftContainerContents += menuStyle.Render(fmt.Sprintf("%s %s", cursor, item))
+		leftContainerContents += menuStyle.Render(fmt.Sprintf("\n%s %s\n", cursor, item))
 	}
 
 	return lipgloss.JoinVertical(

@@ -59,6 +59,14 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					m.HomeView.pane = LeftPane
 				}
 			}
+			if m.HomeView.pane == LeftPane {
+				switch msg.String() {
+				case "up", "k":
+					m.HomeView.LeftPane.cursor = (m.HomeView.LeftPane.cursor - 1 + len(m.HomeView.LeftPane.items)) % len(m.HomeView.LeftPane.items)
+				case "down", "j":
+					m.HomeView.LeftPane.cursor = (m.HomeView.LeftPane.cursor + 1) % len(m.HomeView.LeftPane.items)
+				}
+			}
 		}
 
 	}
