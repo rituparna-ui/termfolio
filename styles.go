@@ -17,3 +17,20 @@ var (
 			Blink(true).
 			Foreground(lipgloss.Color("#008080"))
 )
+
+var (
+	HomeScreenName = lipgloss.
+			NewStyle().
+			Background(lipgloss.Color("#008080")).
+			PaddingLeft(1).
+			PaddingRight(1).
+			Bold(true)
+
+	HomeScreenHref = lipgloss.
+			NewStyle().
+			Background(lipgloss.Color("#008080")).
+			PaddingLeft(1).
+			PaddingRight(1).
+			Bold(true).
+			Underline(true)
+)

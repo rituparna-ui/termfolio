@@ -34,19 +34,17 @@ func GenerateEntryView(m *Model) string {
 }
 
 func GenerateHomeView(m *Model) string {
-	name := lipgloss.NewStyle().
-		Background(lipgloss.Color("62")).
-		Foreground(lipgloss.Color("#FF00FF")).
-		Padding(0, 1)
 
-	leftContainer := lipgloss.NewStyle().
+	leftContainer := lipgloss.
+		NewStyle().
 		Width(m.Window.Width / 4).
-		Height(m.Window.Height - 4).
+		Height(m.Window.Height - 5).
 		Border(lipgloss.RoundedBorder())
 
-	rightContainer := lipgloss.NewStyle().
+	rightContainer := lipgloss.
+		NewStyle().
 		Width(m.Window.Width*3/4 - 4).
-		Height(m.Window.Height - 4).
+		Height(m.Window.Height - 5).
 		Border(lipgloss.RoundedBorder()).
 		MarginRight(4)
 
@@ -60,11 +58,17 @@ func GenerateHomeView(m *Model) string {
 
 	return lipgloss.JoinVertical(
 		lipgloss.Left,
-		name.Render("Rituparna Warwatkar"),
+		lipgloss.JoinHorizontal(
+			lipgloss.Left,
+			HomeScreenName.Render("Rituparna Warwatkar"),
+			" ",
+			HomeScreenHref.Render("https://rituparnawarwatkar.com"),
+		),
 		lipgloss.JoinHorizontal(
 			lipgloss.Center,
 			leftContainer.Render("Left Container"),
 			rightContainer.Render(fmt.Sprintf("Right Container (%s)", m.HomeView.pane)),
 		),
+		// TODO: Add a help section
 	)
 }
