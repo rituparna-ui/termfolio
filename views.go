@@ -1,6 +1,10 @@
 package main
 
-import "github.com/charmbracelet/lipgloss"
+import (
+	"fmt"
+
+	"github.com/charmbracelet/lipgloss"
+)
 
 func GenerateEntryView(m *Model) string {
 	centerText := lipgloss.JoinVertical(
@@ -30,5 +34,37 @@ func GenerateEntryView(m *Model) string {
 }
 
 func GenerateHomeView(m *Model) string {
-	return "Home View"
+	name := lipgloss.NewStyle().
+		Background(lipgloss.Color("62")).
+		Foreground(lipgloss.Color("#FF00FF")).
+		Padding(0, 1)
+
+	leftContainer := lipgloss.NewStyle().
+		Width(m.Window.Width / 4).
+		Height(m.Window.Height - 4).
+		Border(lipgloss.RoundedBorder())
+
+	rightContainer := lipgloss.NewStyle().
+		Width(m.Window.Width*3/4 - 4).
+		Height(m.Window.Height - 4).
+		Border(lipgloss.RoundedBorder()).
+		MarginRight(4)
+
+	if m.HomeView.pane == LeftPane {
+		leftContainer = leftContainer.BorderForeground(lipgloss.Color("#FF00FF"))
+		rightContainer = rightContainer.BorderForeground(lipgloss.Color("#121212"))
+	} else {
+		leftContainer = leftContainer.BorderForeground(lipgloss.Color("#121212"))
+		rightContainer = rightContainer.BorderForeground(lipgloss.Color("#FF00FF"))
+	}
+
+	return lipgloss.JoinVertical(
+		lipgloss.Left,
+		name.Render("Rituparna Warwatkar"),
+		lipgloss.JoinHorizontal(
+			lipgloss.Center,
+			leftContainer.Render("Left Container"),
+			rightContainer.Render(fmt.Sprintf("Right Container (%s)", m.HomeView.pane)),
+		),
+	)
 }

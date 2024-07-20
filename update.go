@@ -51,7 +51,12 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 		if m.Screen == HomeScreen {
 			switch msg.String() {
-
+			case "tab":
+				if m.HomeView.pane == LeftPane {
+					m.HomeView.pane = RightPane
+				} else {
+					m.HomeView.pane = LeftPane
+				}
 			}
 		}
 

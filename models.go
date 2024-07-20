@@ -1,6 +1,8 @@
 package main
 
-import "github.com/charmbracelet/bubbles/progress"
+import (
+	"github.com/charmbracelet/bubbles/progress"
+)
 
 type Window struct {
 	Width  int
@@ -14,9 +16,20 @@ const (
 	HomeScreen  Screen = "HOME_VIEW"
 )
 
+type Pane string
+
+const (
+	LeftPane  Pane = "left"
+	RightPane Pane = "right"
+)
+
 type EntryView struct {
 	showLoader bool
 	progress   progress.Model
+}
+
+type HomeView struct {
+	pane Pane
 }
 
 type Model struct {
@@ -24,10 +37,14 @@ type Model struct {
 	Screen Screen
 
 	EntryView EntryView
+	HomeView  HomeView
 }
 
 func NewModel() Model {
 	return Model{
 		Screen: EntryScreen,
+		HomeView: HomeView{
+			pane: LeftPane,
+		},
 	}
 }
