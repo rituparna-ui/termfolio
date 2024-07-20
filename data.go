@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/charmbracelet/lipgloss"
 )
@@ -152,11 +153,90 @@ func GenerateTabView(m *Model) string {
 	case 0:
 		return GenerateAboutView(m)
 	case 1:
-		return "Projects"
+		return GenerateProjectsView(m)
 	case 2:
 		return GenerateContactView(m)
 	case 3:
 		return GenerateExitView(m)
 	}
 	return "404 | Not Found"
+}
+
+type Project struct {
+	Name        string
+	Description string
+	Link        string
+	Tags        []string
+}
+
+var projects = []Project{
+	{
+		Name:        "Termfolio",
+		Description: "A terminal based portfolio app, served over SSH",
+		Link:        "https://github.com/rituparna-ui/termfolio",
+		Tags:        []string{"Go", "Bubbletea", "Lipgloss"},
+	},
+	{
+		Name:        "HealthCare Portal",
+		Description: "One-stop platform for better virtual healthcare in a hassle-free manner and eliminates any stigma associated with conventional treatment.",
+		Link:        "https://github.com/rituparna-ui/health-care-portal",
+		Tags:        []string{"Express", "NodeJS", "MongoDB", "React", "FastAPI"},
+	},
+	{
+		Name:        "Eligram-X",
+		Description: "A robust social media platform built with the MEAN stack, featuring advanced security measures like OAuth, session management, two-factor authentication along with a fully featured admin panel",
+		Link:        "https://github.com/rituparna-ui/eligram-x",
+		Tags:        []string{"MongoDB", "Express", "Angular", "NodeJS", "Firebase", "Redis"},
+	},
+	{
+		Name:        "IIIT-Guwahati I-Card Portal",
+		Description: "This application processes around 500 ID card requests annually, benefiting the Indian Institute of Information Technology Guwahati.",
+		Link:        "https://github.com/rituparna-ui/iiitg-icard",
+		Tags:        []string{"MongoDB", "Express", "NodeJS"},
+	},
+	{
+		Name:        "Multi-Threaded Kernel (On-going)",
+		Description: "A 32-bit multi-threaded kernel with FAT16 filesystem, utilizing Intel's memory protection mechanisms to safeguard the kernel from user program damage. Memory virtualization, virtual filesystem layer, FAT16 filesystem driver etc.",
+		Link:        "https://github.com/rituparna-ui/kernel",
+		Tags:        []string{"C", "Assembly"},
+	},
+}
+
+func GenerateProjectsList(m *Model) string {
+	projectsList := ""
+
+	for i, project := range projects {
+		title := lipgloss.NewStyle().Bold(true).Render(fmt.Sprintf("%d. %s", i+1, project.Name))
+		description := lipgloss.NewStyle().Faint(true).Render(project.Description)
+		link := lipgloss.NewStyle().Foreground(lipgloss.Color("#FF00FF")).Render("GitHub: " + project.Link)
+		tags := lipgloss.NewStyle().Foreground(lipgloss.Color("63")).Render("Tags: " + strings.Join(project.Tags[:], ", "))
+
+		projectsList = lipgloss.JoinVertical(
+			lipgloss.Left,
+			projectsList,
+			title,
+			description,
+			tags,
+			link,
+			"\n",
+		)
+	}
+
+	return projectsList
+}
+
+func GenerateProjectsView(m *Model) string {
+	projects := lipgloss.
+		NewStyle().
+		Bold(true).
+		Background(lipgloss.Color("63")).
+		PaddingLeft(1).
+		PaddingRight(1).
+		Render("Projects")
+
+	return lipgloss.JoinVertical(
+		lipgloss.Left,
+		projects,
+		GenerateProjectsList(m),
+	)
 }
