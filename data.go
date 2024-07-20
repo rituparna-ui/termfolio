@@ -13,7 +13,7 @@ func GenerateExitView(m *Model) string {
 		AlignHorizontal(lipgloss.Center)
 
 	thankYou := "Thank you for visiting my Termfolio !!!\n"
-	thankYou = lipgloss.NewStyle().Blink(true).Foreground(lipgloss.Color("62")).Render(thankYou)
+	thankYou = lipgloss.NewStyle().Blink(true).Foreground(lipgloss.Color("63")).Render(thankYou)
 
 	openSourceBold := lipgloss.NewStyle().Bold(true).Render("Open Source")
 	github := "It's " + openSourceBold + "! check it out at\n"
@@ -39,8 +39,57 @@ func GenerateExitView(m *Model) string {
 	)
 }
 
+var contactInfo = []string{
+	"Portfolio", "https://rituparnawarwatkar.com/",
+	"LinkedIn", "https://www.linkedin.com/in/rituparna-warwatkar/",
+	"GitHub", "https://github.com/rituparna-ui/",
+	"WhatsApp", "+91 77985 16764",
+	"Email", "rwarwatkar@gmail.com",
+	"Instagram", "https://www.instagram.com/rituparna_warwatkar/",
+}
+
+func GenerateContactView(m *Model) string {
+	contactStyle := lipgloss.
+		NewStyle().
+		Width(m.Window.Width*3/4 - 8).
+		Height(m.Window.Height - 5)
+
+	contact := "Contact Me"
+	contact = lipgloss.
+		NewStyle().
+		Bold(true).
+		Background(lipgloss.Color("63")).
+		PaddingLeft(1).
+		PaddingRight(1).
+		Render(contact)
+
+	infoList := ""
+
+	for i := 0; i < len(contactInfo); i += 2 {
+		info := contactInfo[i]
+		link := contactInfo[i+1]
+
+		infoLink := lipgloss.JoinVertical(
+			lipgloss.Left,
+			lipgloss.NewStyle().Bold(true).Render(info),
+			lipgloss.NewStyle().Faint(true).Render(link),
+		)
+
+		infoList += infoLink + "\n\n"
+	}
+
+	return contactStyle.Render(
+		lipgloss.JoinVertical(
+			lipgloss.Left,
+			contact,
+			"\n\n",
+			infoList,
+		),
+	)
+}
+
 func GetNavItems() []string {
-	return []string{"About", "Projects", "Contact", "Exit"}
+	return []string{"About", "Projects", "Contact Me", "Exit"}
 }
 
 func GenerateTabView(m *Model) string {
@@ -50,7 +99,7 @@ func GenerateTabView(m *Model) string {
 	case 1:
 		return "Projects"
 	case 2:
-		return "Contact"
+		return GenerateContactView(m)
 	case 3:
 		return GenerateExitView(m)
 	}
