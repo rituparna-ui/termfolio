@@ -35,24 +35,14 @@ func GenerateEntryView(m *Model) string {
 
 func GenerateHomeView(m *Model) string {
 
-	leftContainer := lipgloss.
-		NewStyle().
-		Width(m.Window.Width / 4).
-		Height(m.Window.Height - 5).
-		Border(lipgloss.RoundedBorder())
-
-	rightContainer := lipgloss.
-		NewStyle().
-		Width(m.Window.Width*3/4 - 4).
-		Height(m.Window.Height - 5).
-		Border(lipgloss.RoundedBorder()).
-		MarginRight(4)
+	leftContainer := GetHomeScreenLeftContainerStyle(m)
+	rightContainer := GetHomeScreenRightContainerStyle(m)
 
 	if m.HomeView.pane == LeftPane {
 		leftContainer = leftContainer.BorderForeground(lipgloss.Color("#FF00FF"))
-		rightContainer = rightContainer.BorderForeground(lipgloss.Color("#121212"))
+		rightContainer = rightContainer.BorderForeground(lipgloss.Color("#404040"))
 	} else {
-		leftContainer = leftContainer.BorderForeground(lipgloss.Color("#121212"))
+		leftContainer = leftContainer.BorderForeground(lipgloss.Color("#404040"))
 		rightContainer = rightContainer.BorderForeground(lipgloss.Color("#FF00FF"))
 	}
 

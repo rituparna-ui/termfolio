@@ -34,3 +34,23 @@ var (
 			Bold(true).
 			Underline(true)
 )
+
+func GetHomeScreenLeftContainerStyle(m *Model) lipgloss.Style {
+	return lipgloss.
+		NewStyle().
+		Width(m.Window.Width / 4).
+		Height(m.Window.Height - 5).
+		AlignVertical(lipgloss.Center).
+		AlignHorizontal(lipgloss.Center).
+		Border(lipgloss.RoundedBorder())
+}
+
+func GetHomeScreenRightContainerStyle(m *Model) lipgloss.Style {
+	return lipgloss.
+		NewStyle().
+		Width(m.Window.Width*3/4 - 4).
+		Height(m.Window.Height - 5).
+		Border(lipgloss.RoundedBorder()).
+		Padding(1).
+		MarginRight(4)
+}
