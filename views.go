@@ -65,8 +65,8 @@ func GenerateHomeView(m *Model) string {
 
 	rightContainerContents := GenerateTabView(m)
 
-	row1 := lipgloss.NewStyle().Faint(true).Render("↑/k: Move Up  \t|\tTab/Enter: Switch Panes\t")
-	row2 := lipgloss.NewStyle().Faint(true).Render("↓/j: Move down\t|\tEsc      : Back to Left Pane\t")
+	row1 := lipgloss.NewStyle().Faint(true).Render(" ↑/k: Move Up  \t|\tTab/Enter: Switch Panes\t")
+	row2 := lipgloss.NewStyle().Faint(true).Render(" ↓/j: Move down\t|\tEsc      : Back to Left Pane\t")
 
 	helpText := lipgloss.JoinVertical(
 		lipgloss.Left,
