@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/charmbracelet/lipgloss"
 )
 
@@ -88,6 +90,55 @@ func GenerateContactView(m *Model) string {
 	)
 }
 
+func GetFiglet() string {
+	figlet := ""
+	figlet += " ____  \n"
+	figlet += "|  _ \\ \n"
+	figlet += "| |_) |\n"
+	figlet += "|  _ < \n"
+	figlet += "|_| \\_\\ ITUPARNA WARWATKAR\n"
+
+	return figlet
+}
+
+func GenerateAboutView(m *Model) string {
+	figlet := GetFiglet()
+	building := lipgloss.
+		NewStyle().
+		Width(m.Window.Width*3/4 - 10).
+		Bold(true).
+		Border(lipgloss.RoundedBorder()).
+		BorderTop(true).
+		BorderBottom(true).
+		BorderLeft(false).
+		BorderRight(false).
+		PaddingLeft(1).
+		Render("🚀 Building Veritus.ai 🌎 Japan")
+
+	tech := []string{
+		"a FullStack Developer.",
+		"a Flutter Developer.",
+		"a ME(F/A/R)N Stack Developer.",
+		"Flutter/Angular/React.",
+		"a linux enthusiast.",
+		"also learning GenAI.",
+	}
+
+	stack := lipgloss.NewStyle().Bold(true).Render("I am\n")
+
+	for i, t := range tech {
+		stack += fmt.Sprintf("\n%d. %s", i+1, t)
+	}
+
+	return lipgloss.JoinVertical(
+		lipgloss.Left,
+		figlet,
+		"A high-performing engineer, passionate about tech and startups !",
+		building,
+		stack,
+	)
+}
+
 func GetNavItems() []string {
 	return []string{"About", "Projects", "Contact Me", "Exit"}
 }
@@ -95,7 +146,7 @@ func GetNavItems() []string {
 func GenerateTabView(m *Model) string {
 	switch cursor := m.HomeView.LeftPane.cursor; cursor {
 	case 0:
-		return "About"
+		return GenerateAboutView(m)
 	case 1:
 		return "Projects"
 	case 2:
