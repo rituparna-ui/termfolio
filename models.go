@@ -28,8 +28,14 @@ type EntryView struct {
 	progress   progress.Model
 }
 
+type LeftPaneModel struct {
+	items  []string
+	cursor int
+}
+
 type HomeView struct {
-	pane Pane
+	pane     Pane
+	LeftPane LeftPaneModel
 }
 
 type Model struct {

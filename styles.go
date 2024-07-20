@@ -41,8 +41,8 @@ func GetHomeScreenLeftContainerStyle(m *Model) lipgloss.Style {
 		Width(m.Window.Width / 4).
 		Height(m.Window.Height - 5).
 		AlignVertical(lipgloss.Center).
-		AlignHorizontal(lipgloss.Center).
-		Border(lipgloss.RoundedBorder())
+		Border(lipgloss.RoundedBorder()).
+		PaddingLeft(1)
 }
 
 func GetHomeScreenRightContainerStyle(m *Model) lipgloss.Style {
@@ -51,6 +51,7 @@ func GetHomeScreenRightContainerStyle(m *Model) lipgloss.Style {
 		Width(m.Window.Width*3/4 - 4).
 		Height(m.Window.Height - 5).
 		Border(lipgloss.RoundedBorder()).
-		Padding(1).
+		PaddingLeft(2).
+		PaddingRight(2).
 		MarginRight(4)
 }

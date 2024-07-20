@@ -30,6 +30,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case EntryViewLoaderTickMsg:
 		if m.EntryView.progress.Percent() >= 1.0 {
 			m.Screen = "HOME_VIEW"
+			m.HomeView.LeftPane.items = []string{"About", "Projects", "Contact", "Exit"}
 		}
 		cmd := m.EntryView.progress.IncrPercent(rand.Float64() * 1)
 		return m, tea.Batch(cmd, EntryViewLoaderTick())

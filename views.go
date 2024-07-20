@@ -46,6 +46,24 @@ func GenerateHomeView(m *Model) string {
 		rightContainer = rightContainer.BorderForeground(lipgloss.Color("#FF00FF"))
 	}
 
+	leftContainerContents := ""
+	for i, item := range m.HomeView.LeftPane.items {
+		menuStyle := lipgloss.
+			NewStyle().
+			Padding(1)
+
+		cursor := " "
+		if i == m.HomeView.LeftPane.cursor {
+			cursor = ">"
+			menuStyle = menuStyle.
+				Bold(true).
+				Foreground(lipgloss.Color("#FF00FF")).
+				Background(lipgloss.Color("#060606")).
+				Width(m.Window.Width/4 - 2)
+		}
+		leftContainerContents += menuStyle.Render(fmt.Sprintf("%s %s", cursor, item))
+	}
+
 	return lipgloss.JoinVertical(
 		lipgloss.Left,
 		lipgloss.JoinHorizontal(
@@ -56,7 +74,7 @@ func GenerateHomeView(m *Model) string {
 		),
 		lipgloss.JoinHorizontal(
 			lipgloss.Center,
-			leftContainer.Render("Left Container"),
+			leftContainer.Render(leftContainerContents),
 			rightContainer.Render(fmt.Sprintf("Right Container (%s)", m.HomeView.pane)),
 		),
 		// TODO: Add a help section
