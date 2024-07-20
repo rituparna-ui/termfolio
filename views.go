@@ -63,6 +63,8 @@ func GenerateHomeView(m *Model) string {
 		leftContainerContents += menuStyle.Render(fmt.Sprintf("\n%s %s\n", cursor, item))
 	}
 
+	rightContainerContents := GenerateTabView(m)
+
 	return lipgloss.JoinVertical(
 		lipgloss.Left,
 		lipgloss.JoinHorizontal(
@@ -74,7 +76,7 @@ func GenerateHomeView(m *Model) string {
 		lipgloss.JoinHorizontal(
 			lipgloss.Center,
 			leftContainer.Render(leftContainerContents),
-			rightContainer.Render(fmt.Sprintf("Right Container (%s)", m.HomeView.pane)),
+			rightContainer.Render(rightContainerContents),
 		),
 		// TODO: Add a help section
 	)

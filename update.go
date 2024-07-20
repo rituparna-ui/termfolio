@@ -30,7 +30,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case EntryViewLoaderTickMsg:
 		if m.EntryView.progress.Percent() >= 1.0 {
 			m.Screen = "HOME_VIEW"
-			m.HomeView.LeftPane.items = []string{"About", "Projects", "Contact", "Exit"}
+			m.HomeView.LeftPane.items = GetNavItems()
 		}
 		cmd := m.EntryView.progress.IncrPercent(rand.Float64() * 1)
 		return m, tea.Batch(cmd, EntryViewLoaderTick())
@@ -58,6 +58,14 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				} else {
 					m.HomeView.pane = LeftPane
 				}
+			case "enter":
+				if m.HomeView.pane == LeftPane {
+					m.HomeView.pane = RightPane
+				}
+			case "esc":
+				if m.HomeView.pane == RightPane {
+					m.HomeView.pane = LeftPane
+				}
 			}
 			if m.HomeView.pane == LeftPane {
 				switch msg.String() {
@@ -65,6 +73,18 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					m.HomeView.LeftPane.cursor = (m.HomeView.LeftPane.cursor - 1 + len(m.HomeView.LeftPane.items)) % len(m.HomeView.LeftPane.items)
 				case "down", "j":
 					m.HomeView.LeftPane.cursor = (m.HomeView.LeftPane.cursor + 1) % len(m.HomeView.LeftPane.items)
+				}
+			}
+			if m.HomeView.pane == RightPane {
+				switch msg.String() {
+				case "y":
+					if m.HomeView.LeftPane.cursor == 3 {
+						return m, tea.Quit
+					}
+				case "n":
+					if m.HomeView.LeftPane.cursor == 3 {
+						m.HomeView.pane = LeftPane
+					}
 				}
 			}
 		}
