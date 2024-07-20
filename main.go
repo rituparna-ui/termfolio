@@ -3,9 +3,11 @@ package main
 import (
 	"context"
 	"errors"
+	"fmt"
 	"net"
 	"os"
 	"os/signal"
+	"strconv"
 	"syscall"
 	"time"
 
@@ -71,7 +73,24 @@ func myCustomBubbleteaMiddleware() wish.Middleware {
 		// renderer := bubbletea.MakeRenderer(s)
 
 		m := NewModel()
+		m.Visitors = incrementVisitors()
 		return newProg(m, append(bubbletea.MakeOptions(s), tea.WithAltScreen())...)
 	}
 	return bubbletea.MiddlewareWithProgramHandler(teaHandler, termenv.ANSI256)
+}
+
+func incrementVisitors() int {
+	filename := "./visitors.txt"
+
+	if _, err := os.Stat(filename); errors.Is(err, os.ErrNotExist) {
+		fmt.Println("File does not exist")
+		os.WriteFile(filename, []byte("0"), 0644)
+	}
+
+	data, _ := os.ReadFile(filename)
+	visitors, _ := strconv.Atoi(string(data))
+
+	visitors++
+	os.WriteFile(filename, []byte(fmt.Sprintf("%d", visitors)), 0644)
+	return visitors
 }

@@ -130,12 +130,16 @@ func GenerateAboutView(m *Model) string {
 		stack += fmt.Sprintf("\n%d. %s", i+1, t)
 	}
 
+	visitorCount := fmt.Sprintf("You are visitor number: %d", m.Visitors)
+
 	return lipgloss.JoinVertical(
 		lipgloss.Left,
 		figlet,
 		"A high-performing engineer, passionate about tech and startups !",
 		building,
 		stack,
+		"\n",
+		lipgloss.NewStyle().Foreground(lipgloss.Color("63")).Bold(true).Render(visitorCount),
 	)
 }
 

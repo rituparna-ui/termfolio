@@ -42,6 +42,8 @@ type Model struct {
 	Window Window
 	Screen Screen
 
+	Visitors int
+
 	EntryView EntryView
 	HomeView  HomeView
 }
