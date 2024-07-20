@@ -83,7 +83,6 @@ func incrementVisitors() int {
 	filename := "./visitors.txt"
 
 	if _, err := os.Stat(filename); errors.Is(err, os.ErrNotExist) {
-		fmt.Println("File does not exist")
 		os.WriteFile(filename, []byte("0"), 0644)
 	}
 
