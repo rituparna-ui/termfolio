@@ -1,5 +1,7 @@
 package main
 
+import "github.com/charmbracelet/lipgloss"
+
 func (m Model) View() string {
 	switch m.Screen {
 	case BootView:
@@ -14,5 +16,18 @@ func GenerateBootView() string {
 }
 
 func GenerateNotFoundView(m *Model) string {
-	return CenterTextStyle(m).Render("404 Not Found !")
+	text := lipgloss.NewStyle().
+		Blink(true).
+		Foreground(lipgloss.Color("#FF0000")).
+		Render("404, Not Found !!!")
+
+	textbox := lipgloss.NewStyle().
+		Align(lipgloss.Center).
+		Padding(1, 2).
+		BorderStyle(lipgloss.RoundedBorder()).
+		BorderForeground(lipgloss.Color("#FF0000")).
+		Render(text)
+
+	return CenterTextStyle(m).
+		Render(textbox)
 }

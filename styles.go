@@ -6,5 +6,7 @@ func CenterTextStyle(m *Model) lipgloss.Style {
 	return lipgloss.
 		NewStyle().
 		Width(m.Dim.Width).
-		Height(m.Dim.Height)
+		Height(m.Dim.Height).
+		AlignVertical(lipgloss.Center).
+		AlignHorizontal(lipgloss.Center)
 }
