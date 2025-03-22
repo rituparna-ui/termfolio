@@ -1,6 +1,8 @@
 package main
 
-import "github.com/charmbracelet/lipgloss"
+import (
+	"github.com/charmbracelet/lipgloss"
+)
 
 func (m Model) View() string {
 	switch m.Screen {
@@ -38,6 +40,19 @@ func GenerateBootView(m *Model) string {
 		Blink(true).
 		Foreground(lipgloss.Color("#df8e1d")).
 		Render("Press Enter to continue ...")
+
+	if m.BootViewModel.progress.Percent() > 0 {
+		bootingUp := lipgloss.
+			NewStyle().
+			Foreground(lipgloss.Color("#8839ef")).
+			Render("Booting up...")
+		loadingBar := m.BootViewModel.progress.View()
+
+		booting = lipgloss.JoinVertical(lipgloss.Center,
+			bootingUp,
+			loadingBar,
+		)
+	}
 
 	return CenterTextStyle(m).Render(
 		lipgloss.JoinVertical(lipgloss.Center,

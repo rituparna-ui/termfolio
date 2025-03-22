@@ -1,6 +1,9 @@
 package main
 
-import tea "github.com/charmbracelet/bubbletea"
+import (
+	"github.com/charmbracelet/bubbles/progress"
+	tea "github.com/charmbracelet/bubbletea"
+)
 
 func (m Model) Init() tea.Cmd {
 	return nil
@@ -9,5 +12,8 @@ func (m Model) Init() tea.Cmd {
 func InitModel() Model {
 	return Model{
 		Screen: BootView,
+		BootViewModel: BootViewModel{
+			progress: progress.New(progress.WithDefaultGradient()),
+		},
 	}
 }
