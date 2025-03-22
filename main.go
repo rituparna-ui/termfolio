@@ -1,5 +1,7 @@
 package main
 
+// min w*h = 120 * 24
+
 import (
 	"context"
 	"errors"

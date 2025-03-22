@@ -1,5 +1,7 @@
 package main
 
+import "github.com/charmbracelet/lipgloss"
+
 const AVeryLongString = `Rituparna 1
 Rituparna 2
 Rituparna 3
@@ -100,3 +102,35 @@ Rituparna 97
 Rituparna 98
 Rituparna 99
 Rituparna 100`
+
+const AboutPageTextHeader = ` ____
+|  _ \
+| |_) |
+|  _ <
+|_| \_\ ituparna Warwatkar
+
+Yet another noob in this professional world !`
+
+func getAboutPageTextBody(m *Model) string {
+	return lipgloss.
+		NewStyle().
+		Border(lipgloss.ThickBorder(), true, false).
+		Width(m.Dim.Width*3/4 - 8).
+		Render("🚀 Building EC2 @ Amazon Web Services 🌍 Berlin, Germany")
+}
+
+const aboutPageFooter = `I am 
+1. a Backend Developer
+2. a FullStack Developer
+3. a linux enthusiast
+4. a ME(F/A/R/V)N Stack Developer
+5. a N(e/u)xt Developer`
+
+func getAboutPageText(m *Model) string {
+	return lipgloss.JoinVertical(
+		lipgloss.Top,
+		AboutPageTextHeader,
+		getAboutPageTextBody(m),
+		aboutPageFooter,
+	)
+}

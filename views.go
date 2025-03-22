@@ -160,11 +160,12 @@ func homeViewRightPane(m *Model) string {
 
 	rightPane := lipgloss.NewStyle().
 		Align(lipgloss.Left).
-		Height(m.Dim.Height - 3).
-		Width(m.Dim.Width*3/4 - 4).
+		Height(m.Dim.Height-3).
+		Width(m.Dim.Width*3/4-4).
 		BorderStyle(lipgloss.RoundedBorder()).
 		BorderForeground(borderForegroundColor).
-		Render("Right Pane")
+		Padding(0, 1).
+		Render(getAboutPageText(m))
 
 	return lipgloss.JoinVertical(lipgloss.Left,
 		website,
