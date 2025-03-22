@@ -8,6 +8,8 @@ func (m Model) View() string {
 	switch m.Screen {
 	case BootView:
 		return GenerateBootView(&m)
+	case HomeView:
+		return GenerateHomeView(&m)
 	default:
 		return GenerateNotFoundView(&m)
 	}
@@ -77,4 +79,55 @@ func GenerateNotFoundView(m *Model) string {
 
 	return CenterTextStyle(m).
 		Render(textbox)
+}
+
+func homeViewLeftPane(m *Model) string {
+	title := lipgloss.NewStyle().
+		Align(lipgloss.Left).
+		Background(lipgloss.Color("#ea76cb")).
+		Foreground(lipgloss.Color("#000000")).
+		Padding(0, 1).
+		Render("Rituparna Warwatkar")
+
+	leftPane := lipgloss.NewStyle().
+		Align(lipgloss.Left).
+		Height(m.Dim.Height - 3).
+		Width(m.Dim.Width / 4).
+		BorderStyle(lipgloss.RoundedBorder()).
+		BorderForeground(lipgloss.Color("#8839ef")).
+		Render("Left Pane")
+
+	return lipgloss.JoinVertical(lipgloss.Left,
+		title,
+		leftPane,
+	)
+}
+
+func homeViewRightPane(m *Model) string {
+	website := lipgloss.NewStyle().
+		Align(lipgloss.Left).
+		Background(lipgloss.Color("#ea76cb")).
+		Foreground(lipgloss.Color("#000000")).
+		Padding(0, 1).
+		Render("https://rituparnawarwatkar.com")
+
+	rightPane := lipgloss.NewStyle().
+		Align(lipgloss.Left).
+		Height(m.Dim.Height - 3).
+		Width(m.Dim.Width*3/4 - 4).
+		BorderStyle(lipgloss.RoundedBorder()).
+		BorderForeground(lipgloss.Color("#8839ef")).
+		Render("Right Pane")
+
+	return lipgloss.JoinVertical(lipgloss.Left,
+		website,
+		rightPane,
+	)
+}
+
+func GenerateHomeView(m *Model) string {
+	return lipgloss.JoinHorizontal(lipgloss.Top,
+		homeViewLeftPane(m),
+		homeViewRightPane(m),
+	)
 }
