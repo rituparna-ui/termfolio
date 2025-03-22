@@ -81,6 +81,39 @@ func GenerateNotFoundView(m *Model) string {
 		Render(textbox)
 }
 
+func homeViewLeftPaneContents(m *Model) string {
+	menuItems := []string{
+		"About Me",
+		"Experience",
+		"Projects",
+		"Contact Me",
+		"Exit",
+	}
+
+	menu := ""
+
+	for i := 0; i < len(menuItems); i++ {
+		itemStyle := lipgloss.
+			NewStyle().
+			PaddingBottom(1).
+			PaddingLeft(1)
+
+		mark := "  "
+
+		if int(m.HomeViewModel.TabIndex) == i {
+			itemStyle = itemStyle.
+				Foreground(lipgloss.Color("#ea76cb")).
+				Bold(true)
+			mark = "> "
+		}
+
+		menu += itemStyle.Render(mark + menuItems[i])
+		menu += "\n"
+	}
+
+	return menu
+}
+
 func homeViewLeftPane(m *Model) string {
 	title := lipgloss.NewStyle().
 		Align(lipgloss.Left).
@@ -89,13 +122,21 @@ func homeViewLeftPane(m *Model) string {
 		Padding(0, 1).
 		Render("Rituparna Warwatkar")
 
+	borderForegroundColor := lipgloss.Color("#8c8fa1")
+
+	if m.HomeViewModel.SelectedPane == LeftPane {
+		borderForegroundColor = lipgloss.Color("#ea76cb")
+	}
+
 	leftPane := lipgloss.NewStyle().
 		Align(lipgloss.Left).
 		Height(m.Dim.Height - 3).
 		Width(m.Dim.Width / 4).
 		BorderStyle(lipgloss.RoundedBorder()).
-		BorderForeground(lipgloss.Color("#8839ef")).
-		Render("Left Pane")
+		BorderForeground(borderForegroundColor).
+		AlignHorizontal(lipgloss.Left).
+		AlignVertical(lipgloss.Center).
+		Render(homeViewLeftPaneContents(m))
 
 	return lipgloss.JoinVertical(lipgloss.Left,
 		title,
@@ -111,12 +152,18 @@ func homeViewRightPane(m *Model) string {
 		Padding(0, 1).
 		Render("https://rituparnawarwatkar.com")
 
+	borderForegroundColor := lipgloss.Color("#8c8fa1")
+
+	if m.HomeViewModel.SelectedPane == RightPane {
+		borderForegroundColor = lipgloss.Color("#ea76cb")
+	}
+
 	rightPane := lipgloss.NewStyle().
 		Align(lipgloss.Left).
 		Height(m.Dim.Height - 3).
 		Width(m.Dim.Width*3/4 - 4).
 		BorderStyle(lipgloss.RoundedBorder()).
-		BorderForeground(lipgloss.Color("#8839ef")).
+		BorderForeground(borderForegroundColor).
 		Render("Right Pane")
 
 	return lipgloss.JoinVertical(lipgloss.Left,
