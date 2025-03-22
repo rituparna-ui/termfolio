@@ -46,6 +46,31 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.progress.Width = m.Dim.Width / 2
 				return m, tickCmd()
 			}
+		case "tab":
+			if m.Screen == HomeView {
+				m.HomeViewModel.SelectedPane = (m.HomeViewModel.SelectedPane + 1) % 2
+				return m, nil
+			}
+		case "up":
+			if m.Screen == HomeView {
+				if m.HomeViewModel.SelectedPane == LeftPane {
+					m.HomeViewModel.TabIndex--
+					if m.HomeViewModel.TabIndex < 0 {
+						m.HomeViewModel.TabIndex = 5
+					}
+					return m, nil
+				}
+			}
+		case "down":
+			if m.Screen == HomeView {
+				if m.HomeViewModel.SelectedPane == LeftPane {
+					m.HomeViewModel.TabIndex++
+					if m.HomeViewModel.TabIndex > 4 {
+						m.HomeViewModel.TabIndex = 0
+					}
+					return m, nil
+				}
+			}
 		}
 	}
 	return m, nil
