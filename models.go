@@ -1,3 +1,16 @@
 package main
 
-type Model struct{}
+type Screen int
+
+type Dim struct {
+	Width, Height int
+}
+
+const (
+	BootView Screen = iota
+)
+
+type Model struct {
+	Screen
+	Dim
+}

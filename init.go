@@ -7,5 +7,7 @@ func (m Model) Init() tea.Cmd {
 }
 
 func InitModel() Model {
-	return Model{}
+	return Model{
+		Screen: BootView,
+	}
 }
