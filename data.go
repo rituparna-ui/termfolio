@@ -119,7 +119,8 @@ func getAboutPageTextBody(m *Model) string {
 		Render("🚀 Building EC2 @ Amazon Web Services 🌍 Berlin, Germany")
 }
 
-const aboutPageFooter = `I am 
+const aboutPageFooter = `I am
+
 1. a Backend Developer
 2. a FullStack Developer
 3. a linux enthusiast
